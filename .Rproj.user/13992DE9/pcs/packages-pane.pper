@@ -1,0 +1,7 @@
+{
+    "installOptions" : {
+        "installDependencies" : true,
+        "installFromRepository" : true,
+        "libraryPath" : "C:/Users/Alun/Documents/Work/DataScience/Southampton/EvolutionofComplexity/packrat/lib-R"
+    }
+}

@@ -1,0 +1,23 @@
+Package: stabledist
+Version: 0.7-0
+Date: 2015-05-04
+Title: Stable Distribution Functions
+Author: Diethelm Wuertz, Martin Maechler and Rmetrics core team
+    members.
+Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
+Depends: R (>= 3.1.0), stats, utils
+Suggests: Matrix, fBasics, FMStable, RUnit, Rmpfr, sfsmisc
+Description: Density, Probability and Quantile functions, and random
+    number generation for (skew) stable distributions, using the
+    parametrizations of Nolan.
+LazyData: yes
+License: GPL (>= 2)
+URL: http://www.rmetrics.org
+NeedsCompilation: no
+Packaged: 2015-05-04 13:44:30 UTC; maechler
+Repository: CRAN
+Date/Publication: 2015-05-04 16:35:50
+Built: R 3.2.2; ; 2015-10-16 02:42:53 UTC; windows
+InstallAgent: packrat 0.4.4
+InstallSource: CRAN
+Hash: 529b6cc4b720f8349e5982395164dbb2
