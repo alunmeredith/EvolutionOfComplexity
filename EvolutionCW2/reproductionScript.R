@@ -29,8 +29,13 @@ dispersedPop <- data.table(group = c("small", "large"),
 maxGroups <- floor(N/groupSizeSmall)
 population <- data.table(id = 1:maxGroups, group = NA_character_, greedy = NA_real_, coop = NA_real_)
 
-genotypes <- data.table(greedySmall = rep(NA_real_, Tgen) ,greedyLarge = NA_real_,
-                        coopSmall = NA_real_, coopLarge = NA_real_)
+genotypes <- data.table(greedySmall = rep(NA_real_, Tgen+1) ,greedyLarge = NA_real_,coopSmall = NA_real_, coopLarge = NA_real_)
+genotypes[1, greedySmall := N/4]
+genotypes[1, greedyLarge := N/4]
+genotypes[1, coopSmall := N/4]
+genotypes[1, coopLarge := N/4]
+
+
 
 for (j in 1:Tgen){ # iterate for T generations
   groupFormation()
@@ -38,10 +43,10 @@ for (j in 1:Tgen){ # iterate for T generations
   dispersedPop <- buildMigrantPool()
   print(dispersedPop)
   # Save population values after each generation
-  genotypes[j, greedySmall := dispersedPop[group == "small", greedy]]
-  genotypes[j, greedyLarge := dispersedPop[group == "large", greedy]]
-  genotypes[j, coopSmall := dispersedPop[group == "small", coop]]
-  genotypes[j, coopLarge := dispersedPop[group == "large", coop]]
+  genotypes[j+1, greedySmall := dispersedPop[group == "small", greedy]]
+  genotypes[j+1, greedyLarge := dispersedPop[group == "large", greedy]]
+  genotypes[j+1, coopSmall := dispersedPop[group == "small", coop]]
+  genotypes[j+1, coopLarge := dispersedPop[group == "large", coop]]
   
   # Print current state to console
   print(paste("Generation:", j))
@@ -54,7 +59,7 @@ for (j in 1:Tgen){ # iterate for T generations
 #---------------------------------------
 png(file = paste("Gens", t, "SizeBonus", Rlarge - Rsmall*10, ".png", sep=""), width = 840)
 
-genotypes$index <- 1:Tgen
+genotypes$index <- 0:Tgen
 graph <- ggplot(genotypes, aes(x=index, y=value)) +
   geom_point(aes(y=greedySmall/N, col="Greedy/Small")) +
   geom_point(aes(y=greedyLarge/N, col="Greedy/Large")) + 
