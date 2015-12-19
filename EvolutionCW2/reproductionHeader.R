@@ -3,6 +3,10 @@ if (!require(data.table)){
   install.packages("data.table")
   library(data.table)
 }
+if (!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
 
 
 #------- STEP 2. GROUP FORMATION -------
@@ -12,6 +16,9 @@ groupFormation <- function () {
   dispersedPop[, Sum := rowSums(.SD), .SDcols = 2:3]
   smallGroups <- floor(dispersedPop[group == "small", Sum] / groupSizeSmall)
   largeGroups <- floor(dispersedPop[group == "large", Sum] / groupSizeLarge)
+  if (length(largeGroups) == 0) largeGroups = 0L
+  if (length(smallGroups) == 0) smallGroups = 0L
+  
   
   # Add each small individual to a pool and create a sample queue
   poolSmall <- c(rep(1L, dispersedPop[group == "small", greedy]),
@@ -24,15 +31,18 @@ groupFormation <- function () {
     population[i+1, 2:4 := .("small", numGreedy, groupSizeSmall - numGreedy)]
   }
   
-  # Repeat for large groups
-  poolLarge <- c(rep(1L, dispersedPop[group == "large", greedy]),
-                 rep(0L, dispersedPop[group == "large", coop]))
-  poolLarge <- sample(poolLarge, dispersedPop[group == "large", Sum], replace = F)
-  
-  # Populate groups from the sample
-  for (i in 0:(largeGroups-1)){
+  if (length(largeGroups) == 0) largeGroups = 0L
+  if (largeGroups > 0) {
+    # Repeat for large groups
+    poolLarge <- c(rep(1L, dispersedPop[group == "large", greedy]),
+                   rep(0L, dispersedPop[group == "large", coop]))
+    poolLarge <- sample(poolLarge, dispersedPop[group == "large", Sum], replace = F)
+    
+    # Populate groups from the sample
+    for (i in 0:(largeGroups-1)){
     numGreedy <- (sum(poolLarge[(i*groupSizeLarge):((i+1)*groupSizeLarge-1)]))
     population[i+smallGroups+1, 2:4 := .("large", numGreedy, groupSizeLarge - numGreedy)]
+    }
   }
 }
 

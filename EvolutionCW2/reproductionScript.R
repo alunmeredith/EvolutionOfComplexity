@@ -1,17 +1,17 @@
-source('reproductionHeader.r')
+#source('reproductionHeader.r')
 
 # Initialise variables
 N <- 4000
 groupSizeSmall <- 4L
 groupSizeLarge <- 40L
-Rsmall = 4
-Rlarge = 40
-t <- 2
+#Rsmall = 4
+#Rlarge = 40
+#t <- 3
 Gc <- 0.018
 Gs <- 0.02
 Cc <- 0.1
 Cs <- 0.2
-Tgen <- 1000/t
+Tgen <- 10
 R = 1
 K = 0.1
 
@@ -49,9 +49,13 @@ for (j in 1:Tgen){ # iterate for T generations
 }
 
 
-### RESULTS 
+#---------------------------------------
+#--------------- RESULTS ---------------
+#---------------------------------------
+png(file = paste("Gens", t, "SizeBonus", Rlarge - Rsmall*10, ".png", sep=""), width = 840)
+
 genotypes$index <- 1:Tgen
-ggplot(genotypes, aes(x=index, y=value)) +
+graph <- ggplot(genotypes, aes(x=index, y=value)) +
   geom_point(aes(y=greedySmall/N, col="Greedy/Small")) +
   geom_point(aes(y=greedyLarge/N, col="Greedy/Large")) + 
   geom_point(aes(y=coopSmall/N, col="Cooperative/Small")) +
@@ -62,4 +66,8 @@ ggplot(genotypes, aes(x=index, y=value)) +
   geom_line(aes(y=coopLarge/N,col="Cooperative/Large")) +
   xlim(0,50) +
   xlab("Generation") +
-  ylab("Proportion of population")
+  ylab("Proportion of population") +
+  ggtitle(paste("Generations before mixing", t, "- Large bonus", Rlarge - Rsmall*10))
+print(graph)
+
+dev.off()
