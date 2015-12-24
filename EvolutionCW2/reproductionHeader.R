@@ -59,11 +59,11 @@ invisible(sapply(1:maxGroups, function(x) {
   
   # R is based on group size
   ifelse(population[x, (group == "large") & !is.na(group)],
-         R <- Rlarge,
-         R <- Rsmall
-         ) 
-    #R <- R * 1.05^groupSizeLarge * groupSizeLarge
-    #R <- R * 1.05^groupSizeSmall * groupSizeSmall
+         #R <- Rlarge,
+         #R <- Rsmall
+         #) 
+    R <- R * 1.05^groupSizeLarge * groupSizeLarge,
+    R <- R * 1.05^groupSizeSmall * groupSizeSmall)
   
   # Calculate share of the resource. 
   s <- greedy * Gs * Cs

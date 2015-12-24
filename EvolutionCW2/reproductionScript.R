@@ -11,7 +11,7 @@ Gc <- 0.018
 Gs <- 0.02
 Cc <- 0.1
 Cs <- 0.2
-Tgen <- 10
+Tgen <- 50
 R = 1
 K = 0.1
 
@@ -25,6 +25,7 @@ K = 0.1
 dispersedPop <- data.table(group = c("small", "large"), 
                            greedy = c(N/4, N/4),
                            coop = c(N/4, N/4))
+
 # Initialise population table with maximum number of group sizes
 maxGroups <- floor(N/groupSizeSmall)
 population <- data.table(id = 1:maxGroups, group = NA_character_, greedy = NA_real_, coop = NA_real_)
@@ -42,11 +43,23 @@ for (j in 1:Tgen){ # iterate for T generations
   for (i in 1:t) reproduction() # wait time t before mixing the pools and rebuilding groups
   dispersedPop <- buildMigrantPool()
   print(dispersedPop)
+  
   # Save population values after each generation
-  genotypes[j+1, greedySmall := dispersedPop[group == "small", greedy]]
-  genotypes[j+1, greedyLarge := dispersedPop[group == "large", greedy]]
-  genotypes[j+1, coopSmall := dispersedPop[group == "small", coop]]
-  genotypes[j+1, coopLarge := dispersedPop[group == "large", coop]]
+  x <- dispersedPop[group == "small", greedy]
+  if (length(x) == 0) x = 0
+  genotypes[j+1, greedySmall := x]
+  
+  x <- dispersedPop[group == "large", greedy]
+  if (length(x) == 0) x = 0
+  genotypes[j+1, greedyLarge := x]
+  
+  x <- dispersedPop[group == "small", coop]
+  if (length(x) == 0) x = 0
+  genotypes[j+1, coopSmall := x]
+  
+  x <- dispersedPop[group == "large", coop]
+  if (length(x) == 0) x = 0
+  genotypes[j+1, coopLarge := x]
   
   # Print current state to console
   print(paste("Generation:", j))
@@ -57,7 +70,9 @@ for (j in 1:Tgen){ # iterate for T generations
 #---------------------------------------
 #--------------- RESULTS ---------------
 #---------------------------------------
-png(file = paste("Gens", t, "SizeBonus", Rlarge - Rsmall*10, ".png", sep=""), width = 840)
+name <- paste("Gens", t, "SizeBonus", Rlarge - Rsmall*10, sep="")
+
+png(file = paste(name, ".png", sep=""), width = 840)
 
 genotypes$index <- 0:Tgen
 graph <- ggplot(genotypes, aes(x=index, y=value)) +
@@ -76,3 +91,5 @@ graph <- ggplot(genotypes, aes(x=index, y=value)) +
 print(graph)
 
 dev.off()
+
+save(genotypes, file = paste(name, ".Rda", sep=""))

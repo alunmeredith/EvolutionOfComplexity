@@ -48,3 +48,5 @@ png(file = "Equilibrium State", width = 840)
 x <- apply(Time, 2, mean)
 plot <- ggplot(data.frame(x),aes(seq_along(x),x))+geom_bar(stat="identity")
 dev.off()
+
+save(genotypes, file = "equilibriumStats.Rda")
