@@ -1,0 +1,18 @@
+{
+    "contents" : "\n# Initialise variables\nN <- 4400\ngroupSizeSmall <- 4L\ngroupSizeLarge <- 40L\nR = 1\nRsmall = 4\nRlarge = 50\nt <- 4\nlevels = 11\nG <- seq(0.018, 0.02, length.out = levels)\nC <- seq(0.1, 0.2, length.out = levels)\nTgen <- 400\nK = 0.1\nsource('extensionHeader.r')\n\n\n#---------------------------------------\n#-- STEP 1. INITIALISE N INDIVIDUALS ---\n#---------------------------------------\n\n# Because we are using R we describe individuals in a vectorised mannor.\n# Each element of the vector is an allele, with a 3rd variable stating\n# which group the group and 4th the size of the genotype. \n\ninitial <- N/(levels*2)\ndispersedPop <- data.table(group = c(\"small\", \"large\"))\ninvisible(sapply(1:levels, function (x) {\n  dispersedPop[, paste0(\"level\",x) :=  rep(initial, 2)]\n}))\n\n# Initialise population table with maximum number of group sizes\nmaxGroups <- floor(N/groupSizeSmall)\npopulation <- data.table(id = 1:maxGroups, group = NA_character_)\ninvisible(sapply(1:levels, function(x) {\n  population[, paste0(\"level\", x) := NA_real_]\n}))\n\ngenotypes <- data.table(level1small = c(initial, rep(NA_real_, Tgen)))\ninvisible(sapply(1:levels, function(x) {\n  genotypes[, paste0(\"level\", x, \"small\") := \n              c(initial, rep(NA_real_, Tgen))]\n}))\ninvisible(sapply(1:levels, function(x) {\n  genotypes[, paste0(\"level\", x, \"large\") := \n              c(initial, rep(NA_real_, Tgen))]\n}))\n\nfor (j in 1:Tgen) { # iterate for T generations\n  groupFormation()\n  for (i in 1:t) reproduction() # wait time t before mixing \n  buildMigrantPool()\n  print(dispersedPop)\n  \n  # Empty the groups \n  invisible(sapply(1:levels, function(x) {\n    population[, paste0(\"level\", x) := NA_real_]\n  }))\n  \n  # Save population values after each generation\n  x <- dispersedPop[1, setdiff(colnames(dispersedPop),\n                               c(\"group\",\"Sum\")), with=FALSE]\n  y <- dispersedPop[2, setdiff(colnames(dispersedPop),\n                               c(\"group\",\"Sum\")), with=FALSE]\n  row <- cbind(x,y)\n  row[is.na(row)]<-0\n  set(genotypes, as.integer(j + 1), \n      names(genotypes), as.list(round(row)))\n  \n  \n  # Print current state to console\n  print(paste(\"Generation:\", j))\n  print(genotypes[j])\n  save(genotypes, file = \"genotypes.Rda\")\n}\n\n",
+    "created" : 1451999195222.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3850708805",
+    "id" : "64259A39",
+    "lastKnownWriteTime" : 1451999333,
+    "path" : "~/Southampton/EvolutionOfComplexity/CW2/extensionScript.R",
+    "project_path" : "extensionScript.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

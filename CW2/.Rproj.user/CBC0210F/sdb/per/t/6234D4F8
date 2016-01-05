@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1452007713798.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6234D4F8",
+    "lastKnownWriteTime" : 21392300099829876,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "4n187irz07",
+        "caption" : "genotypes",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=genotypes&cache_key=4n187irz07",
+        "displayedObservations" : 401,
+        "environment" : "",
+        "object" : "genotypes",
+        "totalObservations" : 401,
+        "variables" : 26
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

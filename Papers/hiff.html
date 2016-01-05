@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0046)http://www.cs.brandeis.edu/~richardw/hiff.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+   <meta name="GENERATOR" content="Mozilla/4.08 [en] (X11; U; IRIX 5.3 IP22) [Netscape]">
+<style type="text/css"></style></head>
+<body>
+&nbsp;
+<br><b><font size="+4">The Hierarchical-if-and-only-if (H-IFF) GA test function.</font></b>
+<p><a href="http://www.cs.brandeis.edu/~richardw/hiffcode.c">The HIFF C
+code</a>
+</p><p>H-IFF is a hierarchical Building-Block (BB) test function for GAs. It
+has a hierarchical BB structure somewhat like the Royal Roads (R2) (Forrest,
+Mitchell, Holland 1993), but unlike the Royal Roads the BBs are not separable.
+The strong interdependencies between building-blocks means that they cannot
+be solved independently, and this in turn means that H-IFF cannot be solved
+by any kind of hill-climber (unlike the Royal Roads). This makes H-IFF
+an appropriate test algorithm for recombinative GAs. Our work demonstrates
+that your GA will only work on H-IFF if your GA combines BBs effectively,
+and has good diversity maintenance. If you want to know whether recombination
+in your GA is working like the Building-Block Hypothesis (Holland 1975)
+says it should - then H-IFF is the test problem for you.
+</p><p>Here's the abstract from "Hierarchically-Consistent GA Test Problems:
+Summary and Additional Results"
+</p><p>"The Building-Block Hypothesis suggests that the genetic algorithm (GA)
+will perform well when it is able to identify above-average-fitness low-order
+schemata and recombine them to produce higher-order schemata of higher
+fitness. We suppose that the recombinative process continues recursively,
+combining schemata of successively higher orders as search progresses.
+Historically, attempts to illustrate this intuitively straight-forward
+process on abstract test problems, most notably the Royal Road problems,
+have been somewhat perplexing. More recent building-block test problems
+have abandoned the multi-level hierarchical structure of the Royal Roads,
+and thus departed from the original recursive aspects of the hypothesis.
+This paper defines the concept of hierarchical consistency, which captures
+the recursive nature of problems implied by the Building-Block Hypothesis.
+We introduce several variants of problems that are hierarchically consistent
+and begin to explore aspects of problem difficulty with respect to these
+models. "
+</p><p>For explanation please see related papers:
+<br>&nbsp;
+</p><blockquote>Watson RA, Hornby GS, &amp; Pollack JB, 1998, "Modelling Building-Block
+<br>Interdependency", PPSN-V, 1998.
+<p>Watson RA &amp; Pollack JB, 1999, "Hierarchically-Consistent GA Test
+<br>Problems", CEC, 1999.
+</p><p>Watson RA &amp; Pollack JB, 1999, "Incremental Commitment in Genetic
+<br>Algorithms", GECCO, 1999.
+</p><p>"Hierarchically-Consistent GA Test Problems: Summary and Additional
+Results", GECCO-99 Late
+<br>Breaking Papers, 1999, pp 292-297. (pdf version)</p></blockquote>
+
+<p><br>these and others can be found here:
+<br><a href="http://www.cs.brandeis.edu/~richardw">http://www.cs.brandeis.edu/~richardw</a>
+</p><p>HIFF and other GA test functions can also be found here:
+<br><a href="http://www.aic.nrl.navy.mil/~spears/functs.html">http://www.aic.nrl.navy.mil/~spears/functs.html</a>
+</p><p>If HIFF is useful to you please let me know and I can forward anything
+<br>else you need/ answer any questions you might have.
+</p><p>Have fun.
+<br>love,
+<br>Richard.
+<br>&nbsp;
+
+
+</p></body></html>

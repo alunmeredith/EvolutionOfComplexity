@@ -1,0 +1,17 @@
+{
+    "contents" : "source('reproductionHeader.r')\n\n# Initialise variables\nN <- 1000\ngroupSizeSmall <- 4L\ngroupSizeLarge <- 40L\nRsmall = 4\nRlarge = 40\nt <- 3\nGc <- 0.018\nGs <- 0.02\nCc <- 0.1\nCs <- 0.2\nTgen <- 100\nR = 1\nK = 0.1\nTime <- matrix(nrow = 3, ncol = 8)\n\nfor (i in 1:5) {\n  for (groupSizeSmall in 1:8) {\n    dispersedPop <- data.table(group = c(\"small\", \"large\"), \n                               greedy = c(N/2, 0),\n                               coop = c(N/2, 0))\n    \n    # Initialise population table with maximum number of group sizes\n    maxGroups <- floor(N/groupSizeSmall)\n    population <- data.table(id = 1:maxGroups, group = NA_character_,\n                             greedy = NA_real_, coop = NA_real_)\n    \n    genotypes <- data.table(greedySmall = rep(NA_real_, Tgen) ,\n                            greedyLarge = NA_real_,\n                            coopSmall = NA_real_, coopLarge = NA_real_)\n    groupFormation()\n    for (j in 1:Tgen)# iterate for T generations\n    { \n      reproduction() \n      dominant <- sum(population$greedy) - sum(population$coop)\n      if (dominant < 0) print(paste(\"coop dominant at time\", j))\n      else {\n        print(paste(\"greedy dominant at time\", j))\n        break\n      }      \n      Time[i,groupSizeSmall] <- j\n    }\n  }\n}\n\n## Draw Graph\nlibrary(\"extrafont\")\nfont_import()\npng(filename = \"./bin/EquilibriumState.png\", width = 480, height = 360)\n\nTime[is.na(Time)] <- 0\nx <- apply(Time, 2, mean)\n\nscience_theme = theme(panel.grid.major = \n                        element_line(size = 0.5, color = \"grey\"), \n                      panel.grid.minor.y = element_blank(),\n                      axis.line = element_line(size = 0.7,\n                                               color = \"black\"), \n                      legend.position = c(0.85,0.7), \n                      text = element_text(size = 14))\nplot <- ggplot(data.frame(x),aes(seq_along(x),x)) +\n  geom_bar(stat = \"identity\", width = 1) +\n  xlab(\"Initial Group Size\") +\n  ylab(\"Time spent in groups before mixing\") +\n  scale_x_discrete( limits = c(1,2,3,4,5,6,7,8), \n                    labels = c(1,2,3,4,5,6,7,\"8+\"),\n                    breaks = c(1,2,3,4,5,6,7,8)) +\n  scale_y_continuous( labels = c(0,20,40,60,80,100), \n                      breaks = c(0,20,40,60,80,100),\n                      limits = c(0,100),\n                      minor_breaks = NULL) +\n  science_theme +\n  theme_bw(base_size = 20) +\n  annotate(\"text\", x = 6, y = 100, \n           label = \"\\u25a0 Cooperative trait selected for\", \n           color = \"grey20\")\nplot\ndev.off()\n\nsave(genotypes, file = \"./bin/equilibriumStats.Rda\")",
+    "created" : 1451999678552.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "970328621",
+    "id" : "87F868B8",
+    "lastKnownWriteTime" : 1451999691,
+    "path" : "~/Southampton/EvolutionOfComplexity/CW2/reproductionScriptForEquilibriumState.R",
+    "project_path" : "reproductionScriptForEquilibriumState.R",
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
