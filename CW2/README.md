@@ -25,11 +25,11 @@ The report can be found at *./Report/paper.pdf*
   - The script is a altered version of the reproductionScript and uses the same reproductionHeader functions but using only one groupo size (small) so that the other values are NA. 
 
  ### reproductionScriptForEquilibriumState.R
- 	- Reproduces the equilibrium state plot from paper. 
+  - Reproduces the equilibrium state plot from paper. 
 
 ###extensionScript.R / extensionHeader.R
-	- These scripts have the same functions as the reproduction versions modified to accomodate a variety levels of greedy/cooperative behaviour. 
+  - These scripts have the same functions as the reproduction versions modified to accomodate a variety levels of greedy/cooperative behaviour. 
 
 ### extensionEquilibriupScript.R / extensionEquilibriumPlot.R
-	- Reproduces the equilibrium plot from paper for the extended model. 
+  - Reproduces the equilibrium plot from paper for the extended model. 
 
